@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Loadable from 'react-loadable';
-import { Grid, Row } from 'react-bootstrap';
+import { Grid, Row, Badge } from 'react-bootstrap';
 
 import Loading from './components/loading/loading.component';
 import TopMenu from './top-menu/top-menu.component';
@@ -21,8 +21,8 @@ class Parking extends React.Component {
     super(props);
 
     this.links = [
-      { url: '/places', label: 'Places' },
-      { url: '/manage', label: 'Manage' },
+      { url: '/places', label: <span>Places <Badge>3</Badge></span> },
+      { url: '/manage', label: <span>Manage <Badge>5</Badge></span> },
     ];
   }
 
