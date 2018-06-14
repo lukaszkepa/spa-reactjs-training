@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Badge } from 'react-bootstrap';
 
 import NavLinkItem from './nav-link-item.component';
 import linkShape from './top-menu.constants';
@@ -15,7 +15,7 @@ class TopMenu extends React.Component {
         to={link.url}
         eventKey={index}
       >
-        {link.label}
+        <span>{link.label} <Badge>{link.badge}</Badge></span>
       </NavLinkItem>
     ));
 

@@ -1,8 +1,12 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import Loadable from 'react-loadable';
-import { Grid, Row, Badge } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Grid, Row } from 'react-bootstrap';
+import memoize from 'memoize-one';
 
+import { placeShape } from './parking.constants';
 import Loading from './components/loading/loading.component';
 import TopMenu from './top-menu/top-menu.component';
 import Dashboard from './dashboard/dashboard.component';
@@ -17,20 +21,17 @@ const ManagePlaces = Loadable({
 });
 
 class Parking extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.links = [
-      { url: '/places', label: <span>Places <Badge>3</Badge></span> },
-      { url: '/manage', label: <span>Manage <Badge>5</Badge></span> },
-    ];
-  }
+  getLinks = memoize(data => ([
+    { url: '/places', label: 'Places', badge: data.filter(d => !d.occupied).length },
+    { url: '/manage', label: 'Manage', badge: data.length },
+  ]));
 
   render() {
+    const links = this.getLinks(this.props.data);
     return (
       <Grid>
         <Row>
-          <TopMenu links={this.links} />
+          <TopMenu links={links} />
         </Row>
         <Row>
           <Switch>
@@ -44,4 +45,13 @@ class Parking extends React.Component {
   }
 }
 
-export default Parking;
+Parking.propTypes = {
+  data: PropTypes.arrayOf(placeShape).isRequired,
+};
+
+const mapStateToProps = state => ({
+  data: state.parking.places,
+});
+
+export default withRouter(connect(mapStateToProps)(Parking));
+

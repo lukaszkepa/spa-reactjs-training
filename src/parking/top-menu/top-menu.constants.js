@@ -6,6 +6,7 @@ const linkShape = PropTypes.shape({
     PropTypes.string,
     PropTypes.element,
   ]).isRequired,
+  badge: PropTypes.number,
 });
 
 export default linkShape;

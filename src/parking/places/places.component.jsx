@@ -1,22 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { PageHeader, ListGroup, ListGroupItem } from 'react-bootstrap';
 
-class Places extends React.Component {
-  constructor(props) {
-    super(props);
+import * as actions from '../parking.actions';
+import { placeShape } from '../parking.constants';
 
-    this.state = {
-      places: [
-        { id: 1, name: 'Place #1', occupied: false },
-        { id: 2, name: 'Place #2', occupied: true },
-        { id: 3, name: 'Place #3', occupied: false },
-        { id: 4, name: 'Place #4', occupied: false },
-        { id: 5, name: 'Place #5', occupied: true },
-      ],
-    };
+class Places extends React.Component {
+  componentDidMount() {
+    this.props.actions.getPlaces();
   }
 
-  getPlaces = () => this.state.places.map(place => (
+  getPlaces = () => this.props.data.map(place => (
     <ListGroupItem
       key={place.id}
       bsStyle={place.occupied ? 'danger' : 'success'}
@@ -39,4 +35,19 @@ class Places extends React.Component {
   }
 }
 
-export default Places;
+Places.propTypes = {
+  actions: PropTypes.shape({
+    getPlaces: PropTypes.func.isRequired,
+  }).isRequired,
+  data: PropTypes.arrayOf(placeShape).isRequired,
+};
+
+const mapStateToProps = state => ({
+  data: state.parking.places,
+});
+
+const mapDispatchToProps = dispatch => ({
+  actions: bindActionCreators(actions, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Places);

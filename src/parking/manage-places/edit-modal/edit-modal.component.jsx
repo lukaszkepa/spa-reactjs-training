@@ -4,6 +4,7 @@ import {
   Modal, Button,
   FormGroup, ControlLabel, FormControl, Checkbox,
 } from 'react-bootstrap';
+import { placeShape } from '../../parking.constants';
 
 class EditPlaceModal extends React.Component {
   constructor(props) {
@@ -63,11 +64,7 @@ class EditPlaceModal extends React.Component {
 }
 
 EditPlaceModal.propTypes = {
-  place: PropTypes.shape({
-    id: PropTypes.number,
-    name: PropTypes.string,
-    occupied: PropTypes.bool,
-  }).isRequired,
+  place: placeShape.isRequired,
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
