@@ -1,13 +1,12 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 
-const HelloWorld = (props) => {
-  return (
-    <h1>Hello World!</h1>
-  );
-}
+import Parking from './parking/parking.component';
 
 ReactDOM.render(
-  <HelloWorld />,
-  document.getElementById('react-app')
-);
+  <BrowserRouter>
+    <Parking />
+  </BrowserRouter>,
+  document.getElementById('react-app'));
